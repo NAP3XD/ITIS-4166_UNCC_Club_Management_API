@@ -43,3 +43,14 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
 
 export default app;
+
+
+// instructions for branch management
+// git switch -c <branch-name>          // create new branch
+// git add .
+// git commit -m "<comment>"
+
+// git push -u origin <branch-name>       // push branch
+
+// git switch main            // swith to main branch
+// git pull                    // pull down changes to local machine 

@@ -5,11 +5,126 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+// User model - Stores all users (club members, club admins, API admins)
+model User {
+  id                Int               @id @default(autoincrement())
+  email             String            @unique
+  password          String
+  name              String
+  role              UserRole          @default(CLUB_MEMBER)
+  createdAt         DateTime          @default(now()) @map("created_at")
+  updatedAt         DateTime          @updatedAt @map("updated_at")
+  
+  // Relations
+  clubMemberships   ClubMembership[]  // Clubs this user is a member of
+  adminOfClubs      Club[]            @relation("ClubAdmin") // Clubs this user administers
+  eventRSVPs        EventRSVP[]       // Events this user has RSVP'd to
+  
+  @@map("users")
+}
+
+// Club model - Stores club information
+model Club {
+  id                Int               @id @default(autoincrement())
+  name              String            @unique
+  description       String?
+  adminId           Int               @map("admin_id")
+  createdAt         DateTime          @default(now()) @map("created_at")
+  updatedAt         DateTime          @updatedAt @map("updated_at")
+  
+  // Relations
+  admin             User              @relation("ClubAdmin", fields: [adminId], references: [id])
+  members           ClubMembership[]  // Members of this club
+  announcements     ClubAnnouncement[] // Announcements for this club
+  events            Event[]           // Events organized by this club
+  
+  @@map("clubs")
+}
+
+// ClubMembership model - Junction table linking users to clubs
+model ClubMembership {
+  id                Int               @id @default(autoincrement())
+  userId            Int               @map("user_id")
+  clubId            Int               @map("club_id")
+  joinedAt          DateTime          @default(now()) @map("joined_at")
+  
+  // Relations
+  user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  club              Club              @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, clubId]) // A user can only join a club once
+  @@map("club_memberships")
+}
+
+// ClubAnnouncement model - Stores announcements for clubs
+model ClubAnnouncement {
+  id                Int               @id @default(autoincrement())
+  clubId            Int               @map("club_id")
+  title             String
+  content           String
+  createdAt         DateTime          @default(now()) @map("created_at")
+  updatedAt         DateTime          @updatedAt @map("updated_at")
+  
+  // Relations
+  club              Club              @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  
+  @@map("club_announcements")
+}
+
+// Event model - Stores events organized by clubs
+model Event {
+  id                Int               @id @default(autoincrement())
+  clubId            Int               @map("club_id")
+  title             String
+  description       String?
+  location          String?
+  eventDate         DateTime          @map("event_date")
+  createdAt         DateTime          @default(now()) @map("created_at")
+  updatedAt         DateTime          @updatedAt @map("updated_at")
+  
+  // Relations
+  club              Club              @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  rsvps             EventRSVP[]       // RSVPs for this event
+  
+  @@map("events")
+}
+
+// EventRSVP model - Junction table linking users to events with RSVP status
+model EventRSVP {
+  id                Int               @id @default(autoincrement())
+  userId            Int               @map("user_id")
+  eventId           Int               @map("event_id")
+  status            RSVPStatus        @default(ATTENDING)
+  rsvpedAt          DateTime          @default(now()) @map("rsvped_at")
+  updatedAt         DateTime          @updatedAt @map("updated_at")
+  
+  // Relations
+  user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  event             Event             @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, eventId]) // A user can only RSVP once per event
+  @@map("event_rsvps")
+}
+
+// Enum for user roles
+enum UserRole {
+  CLUB_MEMBER   // Regular club members - can join clubs and view announcements
+  CLUB_ADMIN    // Club administrators - can manage their own club and announcements
+  API_ADMIN     // System administrators - full CRUD on all resources
+}
+
+// Enum for RSVP status
+enum RSVPStatus {
+  ATTENDING
+  NOT_ATTENDING
+  MAYBE
 }
