@@ -2,6 +2,12 @@ import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 
+import authRoutes from './routes/authRoutes.js';
+import userRoutes from './routes/userRoutes.js';
+import clubRoutes from './routes/clubRoutes.js';
+import eventRoutes from './routes/eventRoutes.js';
+import announcementRoutes from './routes/announcementRoutes.js';
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(cors());
@@ -9,6 +15,14 @@ app.use(cors());
 app.use(morgan('tiny'));
 
 app.use(express.json());
+
+// api routes go here
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/clubs', clubRoutes);
+app.use('/api/events', eventRoutes);
+app.use('/api/announcements', announcementRoutes);
+
 
 app.use((req, res, next) => {
   const err = new Error('Not Found');
@@ -27,3 +41,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+
+export default app;
