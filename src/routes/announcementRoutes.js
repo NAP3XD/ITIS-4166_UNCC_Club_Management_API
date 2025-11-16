@@ -5,7 +5,7 @@ import {
   validateAnnouncementQuery,
   validateCreateAnnouncement,
   validateUpdateAnnouncement,
-} from '../middleware/announcementValidators.js';
+} from '../middleware/announcementValidator.js';
 
 import {
   getAllAnnouncementsHandler,
@@ -16,7 +16,7 @@ import {
 } from '../controllers/announcementController.js';
 
 import { authenticate } from '../middleware/authenticate.js';
-import { authorizeAnnouncementPermission } from '../middleware/authorizeAnnouncementPermission.js';
+// import { authorizeAnnouncementPermission } from '../middleware/authorizeAnnouncementPermission.js';
 
 const router = express.Router();
 
@@ -25,10 +25,10 @@ router.get('/', validateAnnouncementQuery, getAllAnnouncementsHandler);
 
 router.get('/:id', validateAnnouncementId, getAnnouncementByIdHandler);
 
-router.post('/', authenticate, validateCreateAnnouncement, authorizeAnnouncementPermission, createAnnouncementHandler);
+router.post('/', authenticate, validateCreateAnnouncement, createAnnouncementHandler);
 
-router.put('/:id', validateAnnouncementId, authenticate, authorizeAnnouncementPermission, validateUpdateAnnouncement, updateAnnouncementHandler);
+router.put('/:id', validateAnnouncementId, authenticate, validateUpdateAnnouncement, updateAnnouncementHandler);
 
-router.delete('/:id', authenticate, authorizeAnnouncementPermission, validateAnnouncementId, deleteAnnouncementHandler);
+router.delete('/:id', authenticate, validateAnnouncementId, deleteAnnouncementHandler);
 
 export default router;

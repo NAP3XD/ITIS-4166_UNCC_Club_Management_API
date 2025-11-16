@@ -4,8 +4,8 @@ import morgan from 'morgan';
 
 import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
-import clubRoutes from './routes/clubRoutes.js';
-import eventRoutes from './routes/eventRoutes.js';
+// import clubRoutes from './routes/clubRoutes.js';
+// import eventRoutes from './routes/eventRoutes.js';
 import announcementRoutes from './routes/announcementRoutes.js';
 
 const app = express();
@@ -19,8 +19,8 @@ app.use(express.json());
 // api routes go here
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
-app.use('/api/clubs', clubRoutes);
-app.use('/api/events', eventRoutes);
+// app.use('/api/clubs', clubRoutes);
+// app.use('/api/events', eventRoutes);
 app.use('/api/announcements', announcementRoutes);
 
 
@@ -53,4 +53,4 @@ export default app;
 // git push -u origin <branch-name>       // push branch
 
 // git switch main            // swith to main branch
-// git pull                    // pull down changes to local machine 
+// git pull                    // pull down changes to local machine
