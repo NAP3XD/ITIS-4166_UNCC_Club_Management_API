@@ -4,7 +4,7 @@ import {
   createAnnouncement,
   updateAnnouncement,
   removeAnnouncement
-} from '../repositories/announcementRepository.js';
+} from '../repositories/announcementRepo.js';
 
 export async function getAllAnnouncements(filter = {}) {
   return await findAllAnnouncements(filter);
