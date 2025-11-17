@@ -16,18 +16,18 @@ const router = express.Router();
 
 // Example route: Get user profile
 
-router.get('/', authenticate, authorizeRoles('admin'), getAllUsersHandler);
-
-router.get('/:id', authenticate, authorizeRoles('admin', 'user'), getUserByIdHandler);
+router.get('/', authenticate, authorizeRoles('API_ADMIN'), getAllUsersHandler);
 
 router.get('/me', authenticate, getMyProfileHandler);
 
-router.post('/users', authenticate, authorizeRoles('admin'), createUserHandler);
+router.get('/:id', authenticate, authorizeRoles('API_ADMIN', 'CLUB_ADMIN'), getUserByIdHandler);
 
-router.put('/:id', authenticate, authorizeRoles('admin', 'user'), updateUserHandler);
+router.post('/users', authenticate, authorizeRoles('API_ADMIN'), createUserHandler);
+
+router.put('/:id', authenticate, authorizeRoles('API_ADMIN', 'CLUB_ADMIN'), updateUserHandler);
 
 router.put('/me', authenticate, updateMyProfileHandler);
 
-router.delete('/:id', authenticate, authorizeRoles('admin'), deleteUserHandler);
+router.delete('/:id', authenticate, authorizeRoles('API_ADMIN'), deleteUserHandler);
 
 export default router;
