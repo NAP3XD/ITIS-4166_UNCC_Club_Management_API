@@ -1,0 +1,25 @@
+openapi: 3.1.0
+info:
+  title: Club Management API
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000
+    description: Local development servers
+  - url: https://RenderURL.com
+    description: Production server on render
+tags:
+  - name: Clubs
+    description: Club-related endpoints
+  - name: Events
+    description: Event-related endpoints
+  - name: Announcements
+    description: Announcement-related endpoints
+  - name: Users
+    description: User-related endpoints
+  - name: Auth
+    description: Auth-related endpoints
+paths:
+  /announcements:
+    $ref: paths/announcements.yaml
+  /tasks/{id}:
+    $ref: paths/announcementsById.yaml
