@@ -8,26 +8,39 @@ import {
     updateMyProfileHandler,
     deleteUserHandler
 } from '../controllers/userController.js';
-// Middleware imports -> still needs a userValidator.js for input validation
+// Middleware imports
 import { authenticate } from '../middleware/authenticate.js';
 import { authorizeRoles } from '../middleware/authorizeRoles.js';
 
+// Import validation middleware
+import {
+    validateUserId,
+    validateCreateUser,
+    validateUpdateUser,
+    validateUpdateProfile
+} from '../validation/userValidation.js';
+
 const router = express.Router();
 
-// Example route: Get user profile
-
+// Get all users (Admin only)
 router.get('/', authenticate, authorizeRoles('admin'), getAllUsersHandler);
 
-router.get('/:id', authenticate, authorizeRoles('admin', 'user'), getUserByIdHandler);
-
+// Get current user's profile
 router.get('/me', authenticate, getMyProfileHandler);
 
-router.post('/users', authenticate, authorizeRoles('admin'), createUserHandler);
+// Get user by ID
+router.get('/:id', validateUserId, authenticate, authorizeRoles('admin', 'user'), getUserByIdHandler);
 
-router.put('/:id', authenticate, authorizeRoles('admin', 'user'), updateUserHandler);
+// Create new user (Admin only)
+router.post('/users', validateCreateUser, authenticate, authorizeRoles('admin'), createUserHandler);
 
-router.put('/me', authenticate, updateMyProfileHandler);
+// Update user by ID
+router.put('/:id', validateUserId, validateUpdateUser, authenticate, authorizeRoles('admin', 'user'), updateUserHandler);
 
-router.delete('/:id', authenticate, authorizeRoles('admin'), deleteUserHandler);
+// Update current user's profile
+router.put('/me', validateUpdateProfile, authenticate, updateMyProfileHandler);
+
+// Delete user by ID (Admin only)
+router.delete('/:id', validateUserId, authenticate, authorizeRoles('admin'), deleteUserHandler);
 
 export default router;
