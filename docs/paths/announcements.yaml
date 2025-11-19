@@ -1,0 +1,50 @@
+get:
+  summary: List all announcements
+  tags:
+    - Announcements
+  parameters:
+    - name: clubId
+      in: query
+      required: false
+      description: Filter announcements by club ID
+      schema:
+        type: integer
+        example: 1
+    - name: limit
+      in: query
+      required: false
+      description: Maximum number of announcements to return
+      schema:
+        type: integer
+        example: 10
+  responses:
+    "200":
+      description: OK
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: ../components/schemas/Announcement.yaml
+
+post:
+  summary: Create a new announcement
+  tags:
+    - Announcements
+  security:
+    - BearerAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Announcement.yaml
+  responses:
+    "201":
+      description: Announcement created successfully
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Announcement.yaml
+    "400":
+      $ref: ../components/schemas/ValidationError.yaml

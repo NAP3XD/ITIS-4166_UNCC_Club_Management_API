@@ -1,0 +1,58 @@
+parameters:
+  - name: id
+    in: path
+    required: true
+    description: Announcement ID
+    schema:
+      type: integer
+      example: 1
+
+get:
+  summary: Get an announcement by ID
+  tags:
+    - Announcements
+  responses:
+    "200":
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Announcement.yaml
+    "400":
+      $ref: ../components/schemas/ValidationError.yaml
+    "404":
+      $ref: ../components/schemas/Error.yaml
+
+put:
+  summary: Update an announcement
+  tags:
+    - Announcements
+  security:
+    - BearerAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../components/schemas/Announcement.yaml
+  responses:
+    "200":
+      description: Announcement updated successfully
+      content:
+        application/json:
+          schema:
+            $ref: ../components/schemas/Announcement.yaml
+    "400":
+      $ref: ../components/schemas/ValidationError.yaml
+
+delete:
+  summary: Delete an announcement
+  tags:
+    - Announcements
+  security:
+    - BearerAuth: []
+  responses:
+    "204":
+      description: Announcement deleted successfully
+    "400":
+      $ref: ../components/schemas/ValidationError.yaml

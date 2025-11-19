@@ -21,5 +21,5 @@ tags:
 paths:
   /announcements:
     $ref: paths/announcements.yaml
-  /tasks/{id}:
+  /announcements/{id}:
     $ref: paths/announcementsById.yaml
