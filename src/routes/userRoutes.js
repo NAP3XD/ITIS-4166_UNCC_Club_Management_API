@@ -32,7 +32,7 @@ router.get('/me', authenticate, getMyProfileHandler);
 router.get('/:id', validateUserId, authenticate, authorizeRoles('admin', 'user'), getUserByIdHandler);
 
 // Create new user (Admin only)
-router.post('/users', validateCreateUser, authenticate, authorizeRoles('admin'), createUserHandler);
+router.post('/', validateCreateUser, authenticate, authorizeRoles('admin'), createUserHandler);
 
 // Update user by ID
 router.put('/:id', validateUserId, validateUpdateUser, authenticate, authorizeRoles('admin', 'user'), updateUserHandler);
