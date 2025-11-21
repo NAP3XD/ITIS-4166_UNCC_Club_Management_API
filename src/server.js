@@ -37,6 +37,15 @@ try {
   console.warn('⚠️  API documentation not available. Run "npm run docs:bundle" to generate it.');
 }
 
+// render health check route
+app.get('/health', (req, res) => {
+  res.status(200).json({ 
+    status: 'ok',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime()
+  });
+});
+
 // api routes go here
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
