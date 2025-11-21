@@ -6,7 +6,7 @@ info:
 servers:
   - url: http://localhost:3000/api
     description: Local development server
-  - url: https://RenderURL.com/api
+  - url: https://itis-4166-uncc-club-management-api.onrender.com
     description: Production server on Render
     
 tags:
