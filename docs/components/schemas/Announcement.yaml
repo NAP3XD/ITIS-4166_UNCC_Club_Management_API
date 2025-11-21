@@ -1,0 +1,40 @@
+type: object
+properties:
+  id:
+    type: integer
+    readOnly: true
+    example: 1
+
+  clubId:
+    type: integer
+    description: ID of the club this announcement belongs to
+    example: 2
+
+  title:
+    type: string
+    description: Title of the announcement
+    example: "Our First Meeting"
+
+  content:
+    type: string
+    description: Full content of the announcement
+    example: "Our first meeting will be held Tuesday at 6 PM in Woodward 140."
+
+  createdAt:
+    type: string
+    format: date-time
+    readOnly: true
+    description: When the announcement was created
+    example: "2025-09-01T18:00:00Z"
+
+  updatedAt:
+    type: string
+    format: date-time
+    readOnly: true
+    description: When the announcement was last updated
+    example: "2025-09-01T19:30:00Z"
+
+required:
+  - clubId
+  - title
+  - content
