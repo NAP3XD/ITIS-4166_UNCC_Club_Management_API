@@ -7,10 +7,15 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "node --env-file=.env --watch src/server.js"
+    "dev": "node --env-file=.env --watch src/server.js",
+    "docs:lint": "redocly lint docs/openapi.yaml",
+    "docs:bundle": "redocly bundle docs/openapi.yaml -o docs/bundled/openapi.json",
+    "docs:preview": "redocly preview-docs docs/openapi.yaml",
+    "docs:build": "redocly build-docs docs/openapi.yaml -o docs/dist/index.html"
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",
+    "@redocly/cli": "^2.11.1",
     "eslint": "^9.29.0",
     "eslint-config-prettier": "^10.1.5",
     "globals": "^16.2.0",
@@ -27,6 +32,7 @@
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
     "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.1"
+    "swagger-ui-express": "^5.0.1",
+    "yamljs": "^0.3.0"
   }
 }

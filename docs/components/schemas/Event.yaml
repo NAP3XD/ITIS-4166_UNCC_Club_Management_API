@@ -1,0 +1,57 @@
+type: object
+properties:
+  id:
+    type: integer
+    readOnly: true
+    example: 1
+  clubId:
+    type: integer
+    example: 1
+  title:
+    type: string
+    example: "Monthly Meeting"
+  description:
+    type: string
+    example: "Our monthly club gathering"
+  location:
+    type: string
+    example: "Student Center Room 201"
+  eventDate:
+    type: string
+    format: date-time
+    example: "2025-12-01T18:00:00Z"
+  club:
+    type: object
+    readOnly: true
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+  rsvps:
+    type: array
+    readOnly: true
+    items:
+      type: object
+      properties:
+        id:
+          type: integer
+        userId:
+          type: integer
+        status:
+          type: string
+          enum: [ATTENDING, NOT_ATTENDING, MAYBE]
+  createdAt:
+    type: string
+    format: date-time
+    readOnly: true
+    example: "2025-11-01T10:00:00Z"
+  updatedAt:
+    type: string
+    format: date-time
+    readOnly: true
+    example: "2025-11-01T10:00:00Z"
+required:
+  - clubId
+  - title
+  - eventDate

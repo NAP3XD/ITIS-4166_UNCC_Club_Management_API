@@ -1,0 +1,30 @@
+get:
+  summary: Get my clubs
+  description: Get a list of clubs the authenticated user is a member of
+  tags:
+    - Clubs
+  security:
+    - BearerAuth: []
+  responses:
+    "200":
+      description: List of clubs user is a member of
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                clubId:
+                  type: integer
+                userId:
+                  type: integer
+                joinedAt:
+                  type: string
+                  format: date-time
+                club:
+                  $ref: ../../components/schemas/Club.yaml
+    "401":
+      description: Unauthorized

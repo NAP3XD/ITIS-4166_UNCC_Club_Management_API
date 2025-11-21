@@ -1,0 +1,22 @@
+type: object
+properties:
+  email:
+    type: string
+    format: email
+    example: "user@example.com"
+  password:
+    type: string
+    format: password
+    example: "securePassword123"
+  name:
+    type: string
+    example: "John Doe"
+    description: "Required for registration only"
+  role:
+    type: string
+    enum: [CLUB_MEMBER, CLUB_ADMIN, API_ADMIN]
+    example: "CLUB_MEMBER"
+    description: "Optional for registration, defaults to CLUB_MEMBER"
+required:
+  - email
+  - password

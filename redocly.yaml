@@ -1,0 +1,8 @@
+apis:
+  club-management@v1:
+    root: docs/openapi.yaml
+    lint:
+      extends:
+        - recommended
+      rules:
+        no-unused-components: warning
