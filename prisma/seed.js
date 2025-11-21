@@ -8,12 +8,16 @@ async function main() {
   console.log('Starting seed...');
 
   // Clear the existing data (if any)
-  await prisma.eventRSVP.deleteMany();
-  await prisma.event.deleteMany();
-  await prisma.clubAnnouncement.deleteMany();
-  await prisma.clubMembership.deleteMany();
-  await prisma.club.deleteMany();
-  await prisma.user.deleteMany();
+  try {
+    await prisma.eventRSVP.deleteMany();
+    await prisma.event.deleteMany();
+    await prisma.clubAnnouncement.deleteMany();
+    await prisma.clubMembership.deleteMany();
+    await prisma.club.deleteMany();
+    await prisma.user.deleteMany();
+  } catch (error) {
+    console.log('No existing data');
+  }
 
   // default pass for all test users 'password123' 
   const hashedPassword = await bcrypt.hash('password123', 10);
