@@ -1,0 +1,47 @@
+get:
+  summary: Get current user profile
+  description: Get the authenticated user's profile information
+  tags:
+    - Users
+  security:
+    - BearerAuth: []
+  responses:
+    "200":
+      description: User profile
+      content:
+        application/json:
+          schema:
+            $ref: ../../components/schemas/User.yaml
+    "401":
+      description: Unauthorized
+
+put:
+  summary: Update current user profile
+  description: Update the authenticated user's profile
+  tags:
+    - Users
+  security:
+    - BearerAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+              example: "Updated Name"
+            email:
+              type: string
+              format: email
+              example: "updated@example.com"
+  responses:
+    "200":
+      description: Profile updated successfully
+      content:
+        application/json:
+          schema:
+            $ref: ../../components/schemas/User.yaml
+    "401":
+      description: Unauthorized

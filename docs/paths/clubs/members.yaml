@@ -1,0 +1,45 @@
+get:
+  summary: Get club members
+  description: Get a list of all members of a specific club
+  tags:
+    - Clubs
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: Club ID
+      schema:
+        type: integer
+        example: 1
+  responses:
+    "200":
+      description: List of club members
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                clubId:
+                  type: integer
+                userId:
+                  type: integer
+                joinedAt:
+                  type: string
+                  format: date-time
+                user:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    email:
+                      type: string
+                    role:
+                      type: string
+    "404":
+      description: Club not found

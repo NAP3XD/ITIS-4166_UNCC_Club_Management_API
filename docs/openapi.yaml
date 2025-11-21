@@ -2,23 +2,62 @@ openapi: 3.1.0
 info:
   title: Club Management API
   version: 1.0.0
+  description: RESTful API for managing university clubs, events, announcements, and memberships
 servers:
-  - url: http://localhost:3000
-    description: Local development servers
-  - url: https://RenderURL.com
-    description: Production server on render
+  - url: http://localhost:3000/api
+    description: Local development server
+  - url: https://RenderURL.com/api
+    description: Production server on Render
+    
 tags:
-  - name: Clubs
-    description: Club-related endpoints
-  - name: Events
-    description: Event-related endpoints
-  - name: Announcements
-    description: Announcement-related endpoints
-  - name: Users
-    description: User-related endpoints
   - name: Auth
-    description: Auth-related endpoints
+    description: Authentication and authorization endpoints
+  - name: Users
+    description: User management endpoints
+  - name: Clubs
+    description: Club management and membership endpoints
+  - name: Events
+    description: Event management and RSVP endpoints
+  - name: Announcements
+    description: Club announcements endpoints
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token obtained from login endpoint
+
 paths:
+  /auth/login:
+    $ref: paths/auth/login.yaml
+  /auth/register:
+    $ref: paths/auth/register.yaml
+  /users:
+    $ref: paths/users.yaml
+  /users/me:
+    $ref: paths/users/me.yaml
+  /users/{id}:
+    $ref: paths/users/userId.yaml
+  /clubs:
+    $ref: paths/clubs.yaml
+  /clubs/{id}:
+    $ref: paths/clubs/clubId.yaml
+  /clubs/{id}/join:
+    $ref: paths/clubs/join.yaml
+  /clubs/{id}/leave:
+    $ref: paths/clubs/leave.yaml
+  /clubs/{id}/members:
+    $ref: paths/clubs/members.yaml
+  /clubs/my-clubs:
+    $ref: paths/clubs/myclubs.yaml
+  /events:
+    $ref: paths/events.yaml
+  /events/{id}:
+    $ref: paths/events/eventId.yaml
+  /events/{id}/rsvp:
+    $ref: paths/events/rsvp.yaml
   /announcements:
     $ref: paths/announcements.yaml
   /announcements/{id}:

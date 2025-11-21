@@ -1,0 +1,50 @@
+post:
+  summary: User login
+  description: Authenticate a user and receive a JWT token
+  tags:
+    - Auth
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+              format: email
+              example: "norm@uncc.edu"
+            password:
+              type: string
+              format: password
+              example: "password123"
+          required:
+            - email
+            - password
+  responses:
+    "200":
+      description: Login successful
+      content:
+        application/json:
+          schema:
+            $ref: ../../components/schemas/AuthResponse.yaml
+    "401":
+      description: Invalid credentials
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Invalid email or password"
+    "500":
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Internal server error"

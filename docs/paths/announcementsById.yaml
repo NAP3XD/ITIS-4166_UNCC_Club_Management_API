@@ -21,7 +21,7 @@ get:
     "400":
       $ref: ../components/schemas/ValidationError.yaml
     "404":
-      $ref: ../components/schemas/Error.yaml
+      $ref: ../components/schemas/notFoundError.yaml
 
 put:
   summary: Update an announcement

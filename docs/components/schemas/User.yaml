@@ -1,0 +1,31 @@
+type: object
+properties:
+  id:
+    type: integer
+    readOnly: true
+    example: 1
+  email:
+    type: string
+    format: email
+    example: "user@example.com"
+  name:
+    type: string
+    example: "John Doe"
+  role:
+    type: string
+    enum: [CLUB_MEMBER, CLUB_ADMIN, API_ADMIN]
+    example: "CLUB_MEMBER"
+  createdAt:
+    type: string
+    format: date-time
+    readOnly: true
+    example: "2025-11-01T10:00:00Z"
+  updatedAt:
+    type: string
+    format: date-time
+    readOnly: true
+    example: "2025-11-01T10:00:00Z"
+required:
+  - email
+  - name
+  - password

@@ -1,0 +1,28 @@
+type: object
+properties:
+  token:
+    type: string
+    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+    description: "JWT token valid for 7 days"
+  user:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      email:
+        type: string
+        example: "user@example.com"
+      name:
+        type: string
+        example: "John Doe"
+      role:
+        type: string
+        enum: [CLUB_MEMBER, CLUB_ADMIN, API_ADMIN]
+        example: "CLUB_MEMBER"
+      createdAt:
+        type: string
+        format: date-time
+      updatedAt:
+        type: string
+        format: date-time
