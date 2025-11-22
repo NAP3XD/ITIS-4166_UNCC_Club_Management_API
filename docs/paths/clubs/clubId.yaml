@@ -61,7 +61,7 @@ delete:
   security:
     - BearerAuth: []
   responses:
-    "200":
+    "204":
       description: Club deleted successfully
     "401":
       description: Unauthorized

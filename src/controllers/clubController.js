@@ -73,7 +73,7 @@ export async function deleteClubHandler(req, res) {
     if (!deletedClub) {
       return res.status(404).json({ error: 'Club not found' });
     }
-    res.status(200).json({ message: 'Club deleted successfully' });
+    res.status(204).json({ message: 'Club deleted successfully' });
   } catch (error) {
     console.error('Error deleting club:', error);
     res.status(500).json({ error: error.message || 'Internal server error' });
@@ -108,7 +108,7 @@ export async function leaveClubHandler(req, res) {
     }
 
     await leaveClub(clubId, userId);
-    res.status(200).json({ message: 'Successfully left the club' });
+    res.status(204).json({ message: 'Successfully left the club' });
   } catch (error) {
     console.error('Error leaving club:', error);
     res.status(500).json({ error: error.message || 'Internal server error' });
