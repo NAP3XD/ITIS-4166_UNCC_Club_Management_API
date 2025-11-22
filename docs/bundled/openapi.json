@@ -640,7 +640,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "204": {
             "description": "Club deleted successfully"
           },
           "401": {
@@ -1102,7 +1102,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "204": {
             "description": "Event deleted successfully"
           },
           "401": {

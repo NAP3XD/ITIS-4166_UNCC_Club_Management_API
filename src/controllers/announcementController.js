@@ -50,7 +50,7 @@ export async function createAnnouncementHandler(req, res) {
 // PUT /announcement/:id
 export async function updateAnnouncementHandler(req, res) {
   try {
-    const updatedAnnouncement = await updateAnnouncement(req.params.id, req.body);
+    const updatedAnnouncement = await updateTheAnnouncement(req.params.id, req.body);
     if (!updatedAnnouncement) {
       return res.status(404).json({ message: 'Announcement not found' });
     }
@@ -68,7 +68,7 @@ export async function deleteAnnouncementHandler(req, res) {
     if (!deletedAnnouncement) {
       return res.status(404).json({ message: 'Announcement not found' });
     }
-    res.status(200).json({ message: 'Announcement deleted successfully' });
+    res.status(204).json({ message: 'Announcement deleted successfully' });
   } catch (error) {
     console.error('Error deleting announcement:', error);
     res.status(500).json({ error: error.message });
