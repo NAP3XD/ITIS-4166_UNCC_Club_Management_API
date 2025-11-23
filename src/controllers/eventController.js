@@ -72,7 +72,7 @@ export async function deleteEventHandler(req, res) {
     if (!deletedEvent) {
       return res.status(404).json({ message: 'Event not found' });
     }
-    res.status(200).json({ message: 'Event deleted successfully' });
+    res.status(204).json({ message: 'Event deleted successfully' });
   } catch (error) {
     console.error('Error deleting event:', error);
     res.status(500).json({ error: error.message });
@@ -150,7 +150,7 @@ export async function deleteRSVPHandler(req, res) {
     }
 
     await deleteRSVP(userId, eventId);
-    res.status(200).json({ message: 'RSVP deleted successfully' });
+    res.status(204).json({ message: 'RSVP deleted successfully' });
   } catch (error) {
     console.error('Error deleting RSVP:', error);
     res.status(500).json({ error: error.message });
