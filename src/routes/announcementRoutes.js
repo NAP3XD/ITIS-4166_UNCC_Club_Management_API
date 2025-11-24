@@ -5,7 +5,7 @@ import {
   validateAnnouncementQuery,
   validateCreateAnnouncement,
   validateUpdateAnnouncement,
-} from '../middleware/announcementValidator.js';
+} from '../validation/announcementValidator.js';
 
 import {
   getAllAnnouncementsHandler,
