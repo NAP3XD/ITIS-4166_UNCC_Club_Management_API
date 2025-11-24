@@ -194,15 +194,7 @@ export async function verifyClubMembershipHandler(req, res, next) {
     // getUserClubs returns membership objects with nested club property
     const isMember = userClubs.some(membership => membership.club.id === Number(clubId));
     
-    if (isMember) {
-      return next();
-    } else {
-      return res.status(403).json({ 
-        error: 'You must be a member or admin of this club to perform this action',
-        clubId: clubId,
-        userId: userId
-      });
-    }
+
   } catch (error) {
     console.error('Error verifying club membership:', error);
     res.status(500).json({ error: error.message || 'Internal server error' });
