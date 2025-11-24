@@ -10,6 +10,9 @@ import {
   findClubMembers,
   findUserClubs
 } from '../repositories/clubRepo.js';
+import {
+  getUserByIdHandler
+} from '../controllers/userController.js';
 
 export async function getAllClubs(filter = {}) {
   return await findAllClubs(filter);
@@ -40,13 +43,15 @@ export async function makeClub(data, adminId) {
 
 export async function updateTheClub(id, data, userId) {
   const club = await findClubById(id);
-
+  const user = await getUserByIdHandler(userId);
   if (!club) {
     throw new Error('Club not found');
   }
 
-  if (club.adminId !== userId) {
-    throw new Error('Only the club admin can update the club');
+  if (user.role !== 'API_ADMIN' ) {
+      if (club.adminId !== userId ) {
+        throw new Error('Only the club admin can delete the club');
+      }
   }
 
   return await updateClub(id, data);
@@ -54,14 +59,17 @@ export async function updateTheClub(id, data, userId) {
 
 export async function deleteClub(id, userId) {
   const club = await findClubById(id);
+  const user = await getUserByIdHandler(userId);
 
   if (!club) {
     throw new Error('Club not found');
   }
-
-  if (club.adminId !== userId) {
-    throw new Error('Only the club admin can delete the club');
+  if (user.role !== 'API_ADMIN' ) {
+      if (club.adminId !== userId ) {
+        throw new Error('Only the club admin can delete the club');
+      }
   }
+  
 
   return await removeClub(id);
 }
