@@ -156,3 +156,19 @@ export async function removeMemberHandler(req, res) {
     res.status(500).json({ error: error.message || 'Internal server error' });
   }
 }
+
+export async function verifyClubMembershipHandler(req, res) {
+  try {
+    const clubId = req.params.id;
+    const userId = req.user.id;
+    const clubs = await getUserClubs(userId);
+    if (clubs.some(club => club.id === Number(clubId))) {
+      return res.status(200).json({ isMember: true });
+    } else {
+      return res.status(200).json({ isMember: false });
+    }
+  } catch (error) {
+    console.error('Error verifying club membership:', error);
+    res.status(500).json({ error: error.message || 'Internal server error' });
+  }
+}

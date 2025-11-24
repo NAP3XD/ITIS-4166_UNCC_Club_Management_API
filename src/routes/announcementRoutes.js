@@ -15,6 +15,14 @@ import {
   deleteAnnouncementHandler,
 } from '../controllers/announcementController.js';
 
+import {
+  verifyClubMembershipHandler,
+} from '../controllers/clubController.js';
+
+import {
+  authorizeRoles,
+} from '../middleware/authorizeRoles.js';
+
 import { authenticate } from '../middleware/authenticate.js';
 // import { authorizeAnnouncementPermission } from '../middleware/authorizeAnnouncementPermission.js';
 
@@ -25,10 +33,10 @@ router.get('/', validateAnnouncementQuery, getAllAnnouncementsHandler);
 
 router.get('/:id', validateAnnouncementId, getAnnouncementByIdHandler);
 
-router.post('/', authenticate, validateCreateAnnouncement, createAnnouncementHandler);
+router.post('/', authenticate, authorizeRoles('API_ADMIN', 'CLUB_ADMIN'), verifyClubMembershipHandler, validateCreateAnnouncement, createAnnouncementHandler);
 
-router.put('/:id', validateAnnouncementId, authenticate, validateUpdateAnnouncement, updateAnnouncementHandler);
+router.put('/:id', authenticate, authorizeRoles('API_ADMIN', 'CLUB_ADMIN'), verifyClubMembershipHandler, validateAnnouncementId, validateUpdateAnnouncement, updateAnnouncementHandler);
 
-router.delete('/:id', authenticate, validateAnnouncementId, deleteAnnouncementHandler);
+router.delete('/:id', authenticate, authorizeRoles('API_ADMIN', 'CLUB_ADMIN'), verifyClubMembershipHandler, validateAnnouncementId, deleteAnnouncementHandler);
 
 export default router;
