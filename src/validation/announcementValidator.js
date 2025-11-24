@@ -1,5 +1,5 @@
 import { body, param, query } from 'express-validator';
-import { checkValidationResults } from './handleValidationErrors.js';
+import { checkValidationResults } from '../middleware/handleValidationErrors.js';
 
 // Validate :id param for routes like GET/PUT/DELETE /announcement/:id
 export const validateAnnouncementId = [
