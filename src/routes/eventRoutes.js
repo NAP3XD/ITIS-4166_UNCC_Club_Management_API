@@ -20,10 +20,16 @@ import {
   updateRSVPHandler,
   deleteRSVPHandler,
 } from '../controllers/eventController.js';
-
+import {
+  verifyClubMembershipHandler,
+} from '../controllers/clubController.js';
+import {
+  authorizeRoles,
+} from '../middleware/authorizeRoles.js';
 
 
 import { authenticate } from '../middleware/authenticate.js';
+import { authorizeRoles } from '../middleware/authorizeRoles.js';
 
 const router = express.Router();
 
@@ -32,17 +38,15 @@ router.get('/', validateEventQuery, getAllEventsHandler);
 
 router.get('/:id', validateEventId, getEventByIdHandler);
 
-router.post('/', authenticate, validateCreateEvent, createEventHandler);
+router.post('/', authenticate, authorizeRoles('API_ADMIN', 'CLUB_ADMIN'), verifyClubMembershipHandler,validateCreateEvent, createEventHandler);
 
-router.put('/:id', validateEventId, authenticate, validateUpdateEvent, updateEventHandler);
+router.put('/:id',  authenticate, authorizeRoles('API_ADMIN', 'CLUB_ADMIN'), verifyClubMembershipHandler, validateEventId, validateUpdateEvent, updateEventHandler);
 
-router.delete('/:id', authenticate, validateEventId, deleteEventHandler);
-
+router.delete('/:id', authenticate, authorizeRoles('API_ADMIN', 'CLUB_ADMIN'), verifyClubMembershipHandler, validateEventId, deleteEventHandler);
 // RSVP routes
-router.post('/:id/rsvp', validateEventId, authenticate, validateRSVP, createRSVPHandler);
+router.post('/:id/rsvp', validateEventId, authenticate, verifyClubMembershipHandler, validateRSVP, createRSVPHandler);
 
-router.put('/:id/rsvp', validateEventId, authenticate, validateRSVP, updateRSVPHandler);
+router.put('/:id/rsvp', validateEventId, authenticate, verifyClubMembershipHandler, validateRSVP, updateRSVPHandler);
 
-router.delete('/:id/rsvp', validateEventId, authenticate, deleteRSVPHandler);
-
+router.delete('/:id/rsvp', validateEventId, authenticate, verifyClubMembershipHandler, deleteRSVPHandler);
 export default router;
