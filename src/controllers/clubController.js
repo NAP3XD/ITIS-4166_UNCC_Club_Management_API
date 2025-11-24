@@ -157,15 +157,51 @@ export async function removeMemberHandler(req, res) {
   }
 }
 
-export async function verifyClubMembershipHandler(req, res) {
+export async function verifyClubMembershipHandler(req, res, next) {
   try {
-    const clubId = req.params.id;
+    // Get clubId from params (for events/announcements/:id routes) or body (for create routes)
+    const clubId = req.params.id || req.body.clubId;
+    
+    if (!clubId) {
+      return res.status(400).json({ error: 'Club ID is required' });
+    }
+    
     const userId = req.user.id;
-    const clubs = await getUserClubs(userId);
-    if (clubs.some(club => club.id === Number(clubId))) {
-      return res.status(200).json({ isMember: true });
+    const userRole = req.user.role;
+    
+    // Get the club to check admin status
+    const club = await getClubById(clubId);
+    
+    if (!club) {
+      return res.status(404).json({ error: 'Club not found' });
+    }
+
+
+    // API_ADMIN can access any club
+    if (userRole === 'API_ADMIN') {
+      return next();
+    }
+    
+
+    
+    // Check if user is the club's admin
+    if (club.adminId === userId) {
+      return next();
+    }
+    
+    // Check if user is a member of the club
+    const userClubs = await getUserClubs(userId);
+    // getUserClubs returns membership objects with nested club property
+    const isMember = userClubs.some(membership => membership.club.id === Number(clubId));
+    
+    if (isMember) {
+      return next();
     } else {
-      return res.status(200).json({ isMember: false });
+      return res.status(403).json({ 
+        error: 'You must be a member or admin of this club to perform this action',
+        clubId: clubId,
+        userId: userId
+      });
     }
   } catch (error) {
     console.error('Error verifying club membership:', error);
