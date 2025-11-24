@@ -23,10 +23,6 @@ import {
 import {
   verifyClubMembershipHandler,
 } from '../controllers/clubController.js';
-import {
-  authorizeRoles,
-} from '../middleware/authorizeRoles.js';
-
 
 import { authenticate } from '../middleware/authenticate.js';
 import { authorizeRoles } from '../middleware/authorizeRoles.js';
