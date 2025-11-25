@@ -33,10 +33,11 @@ router.get('/', validateAnnouncementQuery, getAllAnnouncementsHandler);
 
 router.get('/:id', validateAnnouncementId, getAnnouncementByIdHandler);
 
-router.post('/', authenticate, authorizeRoles('API_ADMIN', 'CLUB_ADMIN'), verifyClubMembershipHandler, validateCreateAnnouncement, createAnnouncementHandler);
+// verifyClubMembershipHandler already checks: API_ADMIN OR club admin OR club member
+router.post('/', authenticate, verifyClubMembershipHandler, validateCreateAnnouncement, createAnnouncementHandler);
 
-router.put('/:id', authenticate, authorizeRoles('API_ADMIN', 'CLUB_ADMIN'), verifyClubMembershipHandler, validateAnnouncementId, validateUpdateAnnouncement, updateAnnouncementHandler);
+router.put('/:id', authenticate, verifyClubMembershipHandler, validateAnnouncementId, validateUpdateAnnouncement, updateAnnouncementHandler);
 
-router.delete('/:id', authenticate, authorizeRoles('API_ADMIN', 'CLUB_ADMIN'), verifyClubMembershipHandler, validateAnnouncementId, deleteAnnouncementHandler);
+router.delete('/:id', authenticate, verifyClubMembershipHandler, validateAnnouncementId, deleteAnnouncementHandler);
 
 export default router;

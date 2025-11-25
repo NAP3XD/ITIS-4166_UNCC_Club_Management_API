@@ -34,11 +34,12 @@ router.get('/', validateEventQuery, getAllEventsHandler);
 
 router.get('/:id', validateEventId, getEventByIdHandler);
 
-router.post('/', authenticate, authorizeRoles('API_ADMIN', 'CLUB_ADMIN'), verifyClubMembershipHandler,validateCreateEvent, createEventHandler);
+// verifyClubMembershipHandler already checks: API_ADMIN OR club admin OR club member
+router.post('/', authenticate, verifyClubMembershipHandler, validateCreateEvent, createEventHandler);
 
-router.put('/:id',  authenticate, authorizeRoles('API_ADMIN', 'CLUB_ADMIN'), verifyClubMembershipHandler, validateEventId, validateUpdateEvent, updateEventHandler);
+router.put('/:id', authenticate, verifyClubMembershipHandler, validateEventId, validateUpdateEvent, updateEventHandler);
 
-router.delete('/:id', authenticate, authorizeRoles('API_ADMIN', 'CLUB_ADMIN'), verifyClubMembershipHandler, validateEventId, deleteEventHandler);
+router.delete('/:id', authenticate, verifyClubMembershipHandler, validateEventId, deleteEventHandler);
 // RSVP routes
 router.post('/:id/rsvp', validateEventId, authenticate, verifyClubMembershipHandler, validateRSVP, createRSVPHandler);
 

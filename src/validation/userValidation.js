@@ -15,7 +15,8 @@ export const handleValidationErrors = (req, res, next) => {
 export const validateUserId = [
   param('id')
     .isInt({ min: 1 })
-    .withMessage('User ID must be a positive integer'),
+    .withMessage('User ID must be a positive integer')
+    .toInt(),  // Convert string to integer
   
   handleValidationErrors
 ];
