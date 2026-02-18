@@ -1,3 +1,1 @@
-# Final Project Template
-
-This repository provides the **folder structure** for your team’s final project. All implementation is left to students.
+# UNC Charlotte Club Management API A RESTful API for managing UNC‑Charlotte student clubs, officers, membership, and events. This project was developed as part of ITIS‑4166 and includes **full Swagger/OpenAPI documentation**, a clean modular structure, and a consistent JSON response format. --- ## 📌 Overview The UNC Charlotte Club Management API centralizes all operations related to student organizations. It provides endpoints for: - Creating and managing clubs - Managing officers and membership - Handling club events - Authenticating users - Querying club‑related data The API is designed to be lightweight, easy to extend, and simple to integrate with a frontend or mobile application. 
